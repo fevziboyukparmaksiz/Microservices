@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FreeCourse.Shared.Dtos
 {
-    public class ResponseDto<T>
+    public class Response<T>
     {
         public T Data { get; private set; }
         [JsonIgnore]
@@ -18,24 +18,24 @@ namespace FreeCourse.Shared.Dtos
         public List<string> Errors { get; set; }
 
         //Static Factory Method
-        public static ResponseDto<T> Success(T data, int statusCode)
+        public static Response<T> Success(T data, int statusCode)
         {
-            return new ResponseDto<T>() { Data = data, isSuccess = true, StatusCode = statusCode };
+            return new Response<T>() { Data = data, isSuccess = true, StatusCode = statusCode };
         }
 
-        public static ResponseDto<T> Success(int statusCode)
+        public static Response<T> Success(int statusCode)
         {
-            return new ResponseDto<T>() { Data = default, StatusCode = statusCode, isSuccess = true };
+            return new Response<T>() { Data = default, StatusCode = statusCode, isSuccess = true };
         }
 
-        public static ResponseDto<T> Fail(List<string> errors, int statusCode)
+        public static Response<T> Fail(List<string> errors, int statusCode)
         {
-            return new ResponseDto<T>() { Errors = errors, StatusCode = statusCode, isSuccess = false };
+            return new Response<T>() { Errors = errors, StatusCode = statusCode, isSuccess = false };
         }
 
-        public static ResponseDto<T> Fail(string error, int statusCode)
+        public static Response<T> Fail(string error, int statusCode)
         {
-            return new ResponseDto<T>()
+            return new Response<T>()
             { Errors = new List<string>() { error }, StatusCode = statusCode, isSuccess = false };
         }
 
