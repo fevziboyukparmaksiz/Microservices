@@ -3,11 +3,12 @@ using FreeCourse.Services.Catalog.Dtos;
 using FreeCourse.Services.Catalog.Models;
 using FreeCourse.Services.Catalog.Settings;
 using FreeCourse.Shared.Dtos;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services
 {
-    internal class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
@@ -38,7 +39,7 @@ namespace FreeCourse.Services.Catalog.Services
 
         public async Task<Response<CategoryDto>> GetByIdAsync(string id)
         {
-            var category = _categoryCollection.Find<Category>(x => x.Id == id).FirstOrDefaultAsync();
+            var category = await _categoryCollection.Find<Category>(x => x.Id == id).FirstOrDefaultAsync();
 
             if (category == null)
             {

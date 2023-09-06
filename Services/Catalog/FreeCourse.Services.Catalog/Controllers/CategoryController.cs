@@ -8,17 +8,17 @@ namespace FreeCourse.Services.Catalog.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    internal class CategoryController : CustomBaseController
+    public class CategoryController : CustomBaseController
     {
         private readonly ICategoryService _categoryService;
 
-        internal CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
         [HttpGet]
-        private async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();
 
@@ -26,7 +26,7 @@ namespace FreeCourse.Services.Catalog.Controllers
         }
 
         [HttpGet("{id}")]
-        private async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
             var category = await _categoryService.GetByIdAsync(id);
 
@@ -34,7 +34,7 @@ namespace FreeCourse.Services.Catalog.Controllers
         }
 
         [HttpPost]
-        private async Task<IActionResult> Create(CategoryDto categoryDto)
+        public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
             var response = await _categoryService.CreateAsync(categoryDto);
 

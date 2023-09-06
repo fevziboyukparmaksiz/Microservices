@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace FreeCourse.Services.Catalog.Services
 {
-    internal class CourseService : ICourseService
+    public class CourseService : ICourseService
     {
         private readonly IMongoCollection<Course> _courseCollection;
         private readonly IMongoCollection<Category> _categoryCollection;
@@ -26,14 +26,13 @@ namespace FreeCourse.Services.Catalog.Services
 
         public async Task<Response<List<CourseDto>>> GetAllAsync()
         {
-            var courses = await _courseCollection.Find(course => default).ToListAsync();
+            var courses = await _courseCollection.Find(course => true).ToListAsync();
 
             if (courses.Any())
             {
                 foreach (var course in courses)
                 {
-                    course.Category = await _categoryCollection.Find<Category>(x => x.Id == course.CategoryId)
-                        .FirstAsync();
+                    course.Category = await _categoryCollection.Find<Category>(x => x.Id == course.CategoryId).FirstAsync();
                 }
             }
             else
@@ -42,7 +41,6 @@ namespace FreeCourse.Services.Catalog.Services
             }
 
             return Response<List<CourseDto>>.Success(_mapper.Map<List<CourseDto>>(courses), 200);
-
         }
 
         public async Task<Response<CourseDto>> GetByIdAsync(string id)
