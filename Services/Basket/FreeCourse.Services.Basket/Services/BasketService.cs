@@ -33,7 +33,9 @@ namespace FreeCourse.Services.Basket.Services
 
         public async Task<Response<bool>> Delete(string userId)
         {
-            throw new NotImplementedException();
+            var status = await _redisService.GetDb().KeyDeleteAsync(userId);
+            return status ? Response<bool>.Success(204) : Response<bool>.Fail("Basket could not found", 404);
+
         }
     }
 }
