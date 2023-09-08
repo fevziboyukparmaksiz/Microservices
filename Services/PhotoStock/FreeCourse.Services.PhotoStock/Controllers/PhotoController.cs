@@ -40,7 +40,7 @@ namespace FreeCourse.Services.PhotoStock.Controllers
             }
 
             System.IO.File.Delete(path);
-            return CreateActionResultInstance(Response<NoContent>.Success(204);
+            return CreateActionResultInstance(Response<NoContent>.Success(204));
         }
 
 
