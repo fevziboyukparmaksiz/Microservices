@@ -24,6 +24,7 @@ builder.Services.AddSingleton<RedisService>(serviceProvider =>
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 
 var app = builder.Build();
 
