@@ -1,2 +1,4 @@
 Services
--catalogApý => http://localhost:5011
+	-catalogApý => http://localhost:5011
+	-photoStockApi => http://localhost:5012
+identityServer => http://localhost:5001
