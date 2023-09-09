@@ -1,6 +1,7 @@
 Services
-	-catalogApý => http://localhost:5011
+	-catalogApi => http://localhost:5011
 	-photoStockApi => http://localhost:5012
-	-basketApi => http://localhost:5013,
+	-basketApi => http://localhost:5013
+	-discountApi => http://localhost:5014
 
 identityServer => http://localhost:5001
