@@ -1,5 +1,8 @@
+using FreeCourse.Services.Order.Application.Handlers;
 using FreeCourse.Services.Order.Infrastructure;
+using FreeCourse.Shared.Service;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,13 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommandHandler));
+});
 
 
 var app = builder.Build();
