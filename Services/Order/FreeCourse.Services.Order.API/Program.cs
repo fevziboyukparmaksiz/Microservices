@@ -1,13 +1,17 @@
+using System.IdentityModel.Tokens.Jwt;
 using FreeCourse.Services.Order.Application.Handlers;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,6 +31,20 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssemblyContaining(typeof(CreateOrderCommandHandler));
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["IdentityServerURL"];
+    options.Audience = "resource_order";
+    options.RequireHttpsMetadata = false;
+});
+
+var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+builder.Services.AddControllers(opt =>
+{
+    opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+});
+
 
 var app = builder.Build();
 
@@ -37,6 +55,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
