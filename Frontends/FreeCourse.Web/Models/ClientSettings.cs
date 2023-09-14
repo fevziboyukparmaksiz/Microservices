@@ -3,7 +3,7 @@
     public class ClientSettings
     {
         public Client WebClient { get; set; }
-        public Client WebClientForUsers { get; set; }
+        public Client WebClientForUser { get; set; }
     }
 
     public class Client
