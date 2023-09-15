@@ -55,7 +55,7 @@ namespace FreeCourse.Web.Services
             {
                 var responseContent = await token.HttpResponse.Content.ReadAsStringAsync();
 
-                var errorDto = JsonSerializer.Deserialize<ErrorDto>(responseContent, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                var errorDto = JsonSerializer.Deserialize<ErrorDto>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 return Response<bool>.Fail(errorDto.Errors, 400);
             }
