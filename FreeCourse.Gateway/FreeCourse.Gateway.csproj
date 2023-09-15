@@ -11,4 +11,8 @@
     <PackageReference Include="Ocelot" Version="19.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Frontends\FreeCourse.Web\FreeCourse.Web.csproj" />
+  </ItemGroup>
+
 </Project>
