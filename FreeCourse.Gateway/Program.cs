@@ -1,4 +1,5 @@
 using System.Net;
+using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,14 +28,8 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddOcelot();
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
-
-
 
 var app = builder.Build();
-
-
 
 await app.UseOcelot();
 
