@@ -8,39 +8,40 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-
-builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
+builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAccessTokenManagement();
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
 var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
-
-builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>()
-
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 builder.Services.AddScoped<ClientCredentialTokenHandler>();
-builder.Services.AddHttpClient<IUserService, UserService>(options =>
-{
-    options.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-builder.Services.AddHttpClient<ICatalogService, CatalogService>(options =>
+builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+
+builder.Services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+
 {
-    options.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
 }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-builder.Services.AddAuthentication().AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
-    options.LoginPath = "/Auth/SignIn";
-    options.ExpireTimeSpan = TimeSpan.FromDays(60);
-    options.SlidingExpiration = true;
-    options.Cookie.Name = "webcookie";
+    opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
+{
+    opts.LoginPath = "/Auth/SignIn";
+    opts.ExpireTimeSpan = TimeSpan.FromDays(60);
+    opts.SlidingExpiration = true;
+    opts.Cookie.Name = "webcookie";
 });
+
+builder.Services.AddControllersWithViews();
 
 
 
