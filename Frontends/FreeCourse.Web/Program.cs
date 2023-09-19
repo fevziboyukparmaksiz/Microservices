@@ -1,13 +1,19 @@
 using FreeCourse.Shared.Service;
 using FreeCourse.Web.Handler;
 using FreeCourse.Web.Models;
-using FreeCourse.Web.Services.Interfaces;
 using FreeCourse.Web.Services;
+using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+<<<<<<< HEAD
+=======
+builder.Services.AddControllersWithViews();
+
+
+>>>>>>> 1ebdfdfe85e6a94a0880c610984d75601cf1acbc
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.AddHttpContextAccessor();
@@ -23,7 +29,10 @@ builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTo
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ebdfdfe85e6a94a0880c610984d75601cf1acbc
 {
     opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
 }).AddHttpMessageHandler<ClientCredentialTokenHandler>();

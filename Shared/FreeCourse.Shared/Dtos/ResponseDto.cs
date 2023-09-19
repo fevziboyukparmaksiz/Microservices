@@ -9,11 +9,19 @@ namespace FreeCourse.Shared.Dtos
 {
     public class Response<T>
     {
-        public T Data { get;  set; }
+<<<<<<< HEAD
+        public T Data { get; set; }
         [JsonIgnore]
-        public int StatusCode { get;  set; }
+        public int StatusCode { get; set; }
         [JsonIgnore]
-        public bool isSuccessful { get;  set; }
+        public bool isSuccessful { get; set; }
+=======
+        public T Data { get; set; }
+        [JsonIgnore]
+        public int StatusCode { get; set; }
+        [JsonIgnore]
+        public bool isSuccessful { get; set; }
+>>>>>>> 1ebdfdfe85e6a94a0880c610984d75601cf1acbc
 
         public List<string> Errors { get; set; }
 
