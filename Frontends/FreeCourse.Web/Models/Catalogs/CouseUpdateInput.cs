@@ -1,6 +1,6 @@
 ﻿namespace FreeCourse.Web.Models.Catalogs
 {
-    public class CouseUpdateInput
+    public class CourseUpdateInput
     {
         public string Id { get; set; }
         public string Name { get; set; }

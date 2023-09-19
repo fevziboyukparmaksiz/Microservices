@@ -9,7 +9,7 @@ namespace FreeCourse.Web.Services.Interfaces
         Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId);
         Task<CourseViewModel> GetByCourseIdAsync(string courseId);
         Task<bool> CreateCourseAsync(CourseCreateInput courseCreateInput);
-        Task<bool> UpdateCourseAsync(CouseUpdateInput courseUpdateInput);
+        Task<bool> UpdateCourseAsync(CourseUpdateInput courseUpdateInput);
         Task<bool> DeleteCourseAsync(string courseId);
     }
 }
