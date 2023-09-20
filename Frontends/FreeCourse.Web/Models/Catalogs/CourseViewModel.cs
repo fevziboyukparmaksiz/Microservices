@@ -8,17 +8,18 @@ namespace FreeCourse.Web.Models.Catalogs
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string ShortDescription
+        {
+            get => Description.Length > 100 ? Description.Substring(0, 100) + "..." : Description;
+        }
         public decimal Price { get; set; }
         public string UserId { get; set; }
         public string Photo { get; set; }
+        public string StockPhotoUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public FeatureViewModel Feature { get; set; }
         public string CategoryId { get; set; }
         public CategoryViewModel Category { get; set; }
 
-        public string ShortDescription
-        {
-            get => Description.Length > 100 ? Description.Substring(0, 100) + "..." : Description;
-        }
     }
 }

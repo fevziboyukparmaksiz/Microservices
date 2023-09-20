@@ -30,7 +30,7 @@ namespace FreeCourse.Web.Services
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
             responseSuccess.Data.ForEach(x =>
             {
-                x.Photo = _photoHelper.GetPhotoStockUrl(x.Photo);
+                x.StockPhotoUrl = _photoHelper.GetPhotoStockUrl(x.Photo);
             });
             return responseSuccess.Data;
         }
@@ -62,7 +62,7 @@ namespace FreeCourse.Web.Services
 
             responseSuccess.Data.ForEach(x =>
             {
-                x.Photo = _photoHelper.GetPhotoStockUrl(x.Photo);
+                x.StockPhotoUrl = _photoHelper.GetPhotoStockUrl(x.Photo);
             });
 
             return responseSuccess.Data;
@@ -78,6 +78,8 @@ namespace FreeCourse.Web.Services
             }
 
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
+
+            responseSuccess.Data.StockPhotoUrl = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Photo);
 
             return responseSuccess.Data;
         }
