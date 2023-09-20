@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Kurs Ekleme</h5>
-            
+
             <form asp-controller="Course" asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly"></div>
 
@@ -42,9 +42,11 @@
                     <input asp-for="Feature.Duration" class="form-control">
                     <span class="text-danger" asp-validation-for="Feature.Duration"></span>
                 </div>
-                
-                @*resim input gelicek*@
-                
+                <div class="mb-3">
+                    <label asp-for="PhotoFormFile" class="form-label"></label>
+                    <input asp-for="PhotoFormFile" class="form-control" type="file">
+                </div>
+
                 <button class="btn btn-primary" type="submit">Kurs Kaydet</button>
             </form>
         </div>

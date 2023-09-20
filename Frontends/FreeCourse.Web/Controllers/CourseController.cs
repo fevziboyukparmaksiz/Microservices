@@ -46,7 +46,7 @@ namespace FreeCourse.Web.Controllers
             courseCreateInput.UserId = _sharedIdentityService.GetUserId;
 
             await _catalogService.CreateCourseAsync(courseCreateInput);
-            
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -56,11 +56,11 @@ namespace FreeCourse.Web.Controllers
 
             var categories = await _catalogService.GetAllCategoryAsync();
 
-            if (course==null)
+            if (course == null)
             {
                 RedirectToAction((nameof(Index)));
             }
-            ViewBag.categoryList = new SelectList(categories, "Id", "Name",course.Id);
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
 
             CourseUpdateInput courseUpdateInput = new()
             {
@@ -71,7 +71,7 @@ namespace FreeCourse.Web.Controllers
                 Feature = course.Feature,
                 CategoryId = course.CategoryId,
                 UserId = course.UserId,
-                Picture = course.Picture
+                Photo = course.Photo
             };
 
             return View(courseUpdateInput);
@@ -92,7 +92,7 @@ namespace FreeCourse.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-      
+
         public async Task<IActionResult> Delete(string id)
         {
             await _catalogService.DeleteCourseAsync(id);
