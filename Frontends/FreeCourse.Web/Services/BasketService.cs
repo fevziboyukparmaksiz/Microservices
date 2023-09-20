@@ -61,7 +61,7 @@ namespace FreeCourse.Web.Services
             await SaveOrUpdate(basket);
         }
 
-        public async Task<bool> RemoveBasketItem(string courseId)
+        public async Task<bool> DeleteBasketItem(string courseId)
         {
             var basket = await Get();
 
