@@ -4,6 +4,7 @@ using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.CodeAnalysis.Options;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,16 +23,21 @@ builder.Services.AddScoped<ClientCredentialTokenHandler>();
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 
-builder.Services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+builder.Services.AddHttpClient<ICatalogService, CatalogService>(options =>
 
 {
-    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+    options.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
 }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-builder.Services.AddHttpClient<IUserService, UserService>(opt =>
+builder.Services.AddHttpClient<IUserService, UserService>(options =>
 {
-    opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+    options.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<IPhotoStockService, PhotoStockService>(options =>
+{
+    options.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
 {
