@@ -7,7 +7,7 @@
         public int? DiscountRate { get; set; }
         private List<BasketItemViewModel> _basketItems { get; set; }
 
-        public List<BasketItemViewModel> BasketItem
+        public List<BasketItemViewModel> BasketItems
         {
             get
             {
