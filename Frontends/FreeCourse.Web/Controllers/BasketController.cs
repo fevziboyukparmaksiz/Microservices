@@ -44,16 +44,20 @@ namespace FreeCourse.Web.Controllers
 
         public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
+                return RedirectToAction(nameof(Index));
+            }
             var discountStatus = await _basketService.ApplyDiscount(discountApplyInput.Code);
-            TempData["discountStatus"] = discountStatus;
 
+            TempData["discountStatus"] = discountStatus;
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> CancelAppliedDiscount()
         {
             await _basketService.CancelAppliedDiscount();
-
             return RedirectToAction(nameof(Index));
         }
     }

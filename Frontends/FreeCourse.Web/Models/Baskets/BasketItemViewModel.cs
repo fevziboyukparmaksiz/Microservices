@@ -7,7 +7,7 @@
         public string CourseName { get; set; }
         public decimal Price { get; set; }
 
-        private decimal? DicountAppliedPrice { get; set; }
+        private decimal? DicountAppliedPrice;
 
         public decimal GetCurrentPrice => DicountAppliedPrice != null ? DicountAppliedPrice.Value : Price;
 
