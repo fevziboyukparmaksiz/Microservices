@@ -52,7 +52,9 @@ namespace FreeCourse.Web.Controllers
 
         public async Task<IActionResult> CancelAppliedDiscount()
         {
+            await _basketService.CancelAppliedDiscount();
 
+            return RedirectToAction(nameof(Index));
         }
     }
 }
