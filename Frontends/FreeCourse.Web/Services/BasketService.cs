@@ -18,7 +18,7 @@ namespace FreeCourse.Web.Services
         {
             var response = await _httpClient.GetAsync("basket");
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 return null;
             }
@@ -75,8 +75,8 @@ namespace FreeCourse.Web.Services
             if (!deleteResult) return false;
 
 
-            if (!basket.BasketItems.Any())
-                basket.DiscountCode = null;
+            //if (!basket.BasketItems.Any())
+            //    basket.DiscountCode = null;
 
 
             return await SaveOrUpdate(basket);
