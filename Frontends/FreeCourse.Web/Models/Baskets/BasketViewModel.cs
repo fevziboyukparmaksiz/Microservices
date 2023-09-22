@@ -11,7 +11,7 @@
         {
             get
             {
-                if (hasDiscount)
+                if (HasDiscount)
                 {
                     _basketItems.ForEach(x =>
                     {
@@ -31,6 +31,6 @@
 
         public decimal TotalPrice => _basketItems.Sum(x => x.GetCurrentPrice);
 
-        public bool hasDiscount => !string.IsNullOrEmpty(DiscountCode);
+        public bool HasDiscount => !string.IsNullOrEmpty(DiscountCode);
     }
 }

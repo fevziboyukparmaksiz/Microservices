@@ -47,7 +47,7 @@ namespace FreeCourse.Web.Services
 
             if (basket != null)
             {
-                if (basket.BasketItems.Any(x => x.CourseId == basketItemViewModel.CourseId)) ;
+                if (!basket.BasketItems.Any(x => x.CourseId == basketItemViewModel.CourseId))
                 {
                     basket.BasketItems.Add(basketItemViewModel);
                 }
