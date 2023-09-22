@@ -86,7 +86,7 @@ namespace FreeCourse.Web.Services
 
         public async Task<bool> ApplyDiscount(string discountCode)
         {
-            await CancelApplyDiscount();
+            await CancelAppliedDiscount();
 
             var basket = await Get();
 
@@ -107,7 +107,7 @@ namespace FreeCourse.Web.Services
             return true;
         }
 
-        public async Task<bool> CancelApplyDiscount()
+        public async Task<bool> CancelAppliedDiscount()
         {
             var basket = await Get();
 
