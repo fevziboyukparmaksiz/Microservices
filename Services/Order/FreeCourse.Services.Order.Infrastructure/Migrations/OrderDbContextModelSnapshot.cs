@@ -77,7 +77,7 @@ namespace FreeCourse.Services.Order.Infrastructure.Migrations
 
             modelBuilder.Entity("FreeCourse.Services.Order.Domain.OrderAggregate.Order", b =>
                 {
-                    b.OwnsOne("FreeCourse.Services.Order.Domain.OrderAggregate.Address", "Address", b1 =>
+                    b.OwnsOne("FreeCourse.Services.Order.Domain.OrderAggregate.Order.Address#FreeCourse.Services.Order.Domain.OrderAggregate.Address", "Address", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
