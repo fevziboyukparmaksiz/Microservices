@@ -1,7 +1,8 @@
 ﻿using FreeCourse.Services.FakePayment.Models;
 using FreeCourse.Shared.BaseController;
 using FreeCourse.Shared.Dtos;
-using Microsoft.AspNetCore.Http;
+using FreeCourse.Shared.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreeCourse.Services.FakePayment.Controllers
@@ -10,11 +11,42 @@ namespace FreeCourse.Services.FakePayment.Controllers
     [ApiController]
     public class FakePaymentController : CustomBaseController
     {
-        [HttpPost]
-        public IActionResult ReceivePayment(PaymentDto paymentDto)
+        private readonly ISendEndpointProvider _sendEndpointProvider;
+
+        public FakePaymentController(ISendEndpointProvider sendEndpointProvider)
         {
-            //payment Dto ile ödeme işlemi gerçekleşir.
-            return CreateActionResultInstance(Response<NoContent>.Success(200));
+            _sendEndpointProvider = sendEndpointProvider;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReceivePayment(PaymentDto paymentDto)
+        {
+            var sendpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service"));
+
+            var createOrderMessageCommand = new CreateOrderMessageCommand()
+            {
+                BuyerId = paymentDto.Order.BuyerId,
+                Province = paymentDto.Order.Address.Province,
+                District = paymentDto.Order.Address.District,
+                Line = paymentDto.Order.Address.Line,
+                Street = paymentDto.Order.Address.Line
+            };
+
+            paymentDto.Order.OrderItems.ForEach(x =>
+            {
+                createOrderMessageCommand.OrderItems.Add(new OrderItem()
+                {
+                    PictureUrl = x.PictureUrl,
+                    Price = x.Price,
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName
+                });
+            });
+
+            await sendpoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand);
+
+            return CreateActionResultInstance(Shared.Dtos.Response<NoContent>.Success(200));
+
         }
     }
 }
