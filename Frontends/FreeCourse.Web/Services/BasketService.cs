@@ -77,8 +77,8 @@ namespace FreeCourse.Web.Services
             if (!deleteResult) return false;
 
 
-            //if (!basket.BasketItems.Any())
-            //    basket.DiscountCode = null;
+            if (!basket.BasketItems.Any())
+                basket.DiscountCode = null;
 
 
             return await SaveOrUpdate(basket);
