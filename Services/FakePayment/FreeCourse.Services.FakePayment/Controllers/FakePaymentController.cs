@@ -29,7 +29,8 @@ namespace FreeCourse.Services.FakePayment.Controllers
                 Province = paymentDto.Order.Address.Province,
                 District = paymentDto.Order.Address.District,
                 Line = paymentDto.Order.Address.Line,
-                Street = paymentDto.Order.Address.Line
+                Street = paymentDto.Order.Address.Line,
+                ZipCode = paymentDto.Order.Address.ZipCode
             };
 
             paymentDto.Order.OrderItems.ForEach(x =>
